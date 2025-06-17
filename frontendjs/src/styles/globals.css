@@ -1,0 +1,97 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --size: clamp(0.5rem, calc((1vw + 1vh) / 2), 2rem);
+  --scale: 1.9;
+  --spacing: 0.15rem;
+  --font-h1: calc(var(--size) * var(--scale) * var(--scale) * var(--scale));
+  --font-h2: calc(var(--size) * var(--scale) * var(--scale));
+  --font-h3: calc(var(--size) * var(--scale));
+  --font-rubik: "Rubik", sans-serif;
+  --font-sora: "Sora", sans-serif;
+  --acme-headtext-color: #fff;
+  --acme-titletext-color: #fff;
+  --acme-subtext-color: #fff;
+  --acme-buttontext-color: #fff;
+  --acme-paratext-color: black;
+
+  --acme-mainbg-color: #fff;
+  --acme-gradbgt-color: #ffffff8a;
+  --acme-subbg-color: #fff;
+  --acme-buttonbg-color: #fff;
+}
+.dark {
+  --acme-headtext-color: black;
+  --acme-paratext-color: #fff;
+  --acme-titletext-color: black;
+  --acme-subtext-color: #fff;
+  --acme-buttontext-color: #fff;
+
+  --acme-mainbg-color: #1e2939;
+  --acme-gradbgt-color: #1e2939a5;
+  --acme-subbg-color: #fff;
+  --acme-buttonbg-color: #fff;
+}
+@layer theme {
+  :root {
+    --font-h1s: calc(var(--size) * var(--scale) * var(--scale) * var(--scale));
+    --font-h2s: calc(var(--size) * var(--scale) * var(--scale));
+    --font-h3s: calc(var(--size) * var(--scale));
+  }
+}
+
+@theme {
+  --color-canvas: var(--acme-canvas-color);
+  --color-headtext: var(--acme-headtext-color);
+  --color-mainbg: var(--acme-mainbg-color);
+  --color-gradbgt: var(--acme-gradbgt-color);
+  --color-paratext: var(--acme-paratext-color);
+  --animate-heartbeat: heartbeat 4s infinite alternate;
+  --animate-rotate: rotate 2s linear infinite;
+  --font-rubik: var(--font-rubik);
+  --font-sora: var(--font-sora);
+  --shadow-custom-sm: 0 1px 6px rgba(0, 0, 0, 0.1);
+
+  @keyframes heartbeat {
+    0% {
+      transform: scale(0.3);
+    }
+    100% {
+      transform: scale(0.8);
+    }
+  }
+
+  @keyframes rotate {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}
+@layer utilities {
+  .mt-8 {
+    margin-top: calc(var(--spacing) * 8);
+  }
+  .w-17 {
+    width: calc(var(--spacing) * 17);
+  }
+  .pr-29 {
+    padding-right: calc(var(--spacing) * 29);
+  }
+  .text-h1s {
+    font-size: var(--font-h1s);
+  }
+  .text-h2s {
+    font-size: var(--font-h2s);
+  }
+  .text-h3s {
+    font-size: var(--font-h3s);
+  }
+}
+
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
