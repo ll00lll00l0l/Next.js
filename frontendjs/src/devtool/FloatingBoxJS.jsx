@@ -8,6 +8,7 @@ const FloatingBoxJS = () => {
   const [size, setSize] = useState({ width: 300, height: 200 });
   const [isDragging, setIsDragging] = useState(false);
   const [isResizing, setIsResizing] = useState(false);
+  const [filter, setFilter] = useState("all");
   const offset = useRef({ x: 0, y: 0 });
   const [logs, setLogs] = useState([]);
 
@@ -88,6 +89,7 @@ const FloatingBoxJS = () => {
   }, [isDragging, isResizing]);
 
   const logColors = {
+    all: "#00fff2",
     error: "#ef4444",
     success: "#22c55e",
     info: "#3b82f6",
@@ -132,7 +134,7 @@ const FloatingBoxJS = () => {
         <strong>Console Output:</strong>
         <button style={{ border: "none", backgroundColor: "transparent" , cursor: "pointer"}} onClick={() => setLogs([])}>⊘</button>
         </span>
-        <div style={{ display: "flex", gap: "8px", fontSize: "11px" }}>
+        {/* <div style={{ display: "flex", gap: "8px", fontSize: "11px" }}>
           {["log", "info", "success", "error"].map((type) => {
             const count = logs.filter((log) => log.type === type).length;
             return (
@@ -141,15 +143,40 @@ const FloatingBoxJS = () => {
               </span>
             );
           })}
-        </div>
+        </div> */}
+        <div style={{ display: "flex", gap: "8px", fontSize: "11px", flexWrap: "wrap" }}>
+  {["all", "log", "info", "success", "error"].map((type) => {
+    const count = type === "all"
+      ? logs.length
+      : logs.filter((log) => log.type === type).length;
+    return (
+      <button
+        key={type}
+        onClick={() => setFilter(type)}
+        style={{
+          color: getColor(type),
+          fontWeight: filter === type ? "bold" : "normal",
+          background: "transparent",
+          border: "1px solid transparent",
+          cursor: "pointer",
+        }}
+      >
+        {type.toUpperCase()}: {count}
+      </button>
+    );
+  })}
+</div>
       </div>
-      <div style={{ overflowY: "auto", maxHeight: size.height - 40 }}>
-       {[...logs].reverse().map((log, idx) => (
-          <div key={idx} style={{ color: getColor(log.type) }}>
-            {log.message}
-          </div>
-        ))}
+ <div style={{ overflowY: "auto", maxHeight: size.height - 40 }}>
+  {[...logs]
+    .filter((log) => filter === "all" || log.type === filter)
+    .reverse()
+    .map((log, idx) => (
+      <div key={idx} style={{ color: getColor(log.type) }}>
+        {log.message}
       </div>
+  ))}
+</div>
       <div
         data-resize
         style={{
