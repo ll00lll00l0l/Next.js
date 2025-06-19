@@ -4,7 +4,7 @@ import React, { useRef, useState, useEffect } from "react";
 
 const FloatingBoxJS = () => {
   const boxRef = useRef(null);
-  const [position, setPosition] = useState({ x: 100, y: 100 });
+  const [position, setPosition] = useState({ x: 1000, y: 200});
   const [size, setSize] = useState({ width: 300, height: 200 });
   const [isDragging, setIsDragging] = useState(false);
   const [isResizing, setIsResizing] = useState(false);
@@ -119,11 +119,32 @@ const FloatingBoxJS = () => {
         resize: "none",
       }}
     >
-      <strong style={{ display: "block", marginBottom: "8px" }}>
-        Console Output:
-      </strong>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginBottom: "8px",
+          flexWrap: "wrap",
+        }}
+      >
+        <span style={{ display: "flex", width: "100%",justifyContent: "space-between" }}>
+
+        <strong>Console Output:</strong>
+        <button style={{ border: "none", backgroundColor: "transparent" , cursor: "pointer"}} onClick={() => setLogs([])}>⊘</button>
+        </span>
+        <div style={{ display: "flex", gap: "8px", fontSize: "11px" }}>
+          {["log", "info", "success", "error"].map((type) => {
+            const count = logs.filter((log) => log.type === type).length;
+            return (
+              <span key={type} style={{ color: getColor(type) }}>
+                {type.toUpperCase()}: {count}
+              </span>
+            );
+          })}
+        </div>
+      </div>
       <div style={{ overflowY: "auto", maxHeight: size.height - 40 }}>
-        {logs.slice(-10).map((log, idx) => (
+       {[...logs].reverse().map((log, idx) => (
           <div key={idx} style={{ color: getColor(log.type) }}>
             {log.message}
           </div>
@@ -137,12 +158,11 @@ const FloatingBoxJS = () => {
           bottom: 0,
           width: "16px",
           height: "16px",
-          backgroundColor: "#334155",
+          backgroundColor: "#ffffff",
           cursor: "nwse-resize",
         }}
       />
     </div>
   );
 };
-
 export default FloatingBoxJS;
