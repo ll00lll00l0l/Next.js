@@ -4,7 +4,7 @@ import React, { useRef, useState, useEffect } from "react";
 
 const FloatingBoxJS = () => {
   const boxRef = useRef(null);
-  const [position, setPosition] = useState({ x: 1000, y: 200});
+  const [position, setPosition] = useState({ x: 1000, y: 200 });
   const [size, setSize] = useState({ width: 300, height: 200 });
   const [isDragging, setIsDragging] = useState(false);
   const [isResizing, setIsResizing] = useState(false);
@@ -129,10 +129,24 @@ const FloatingBoxJS = () => {
           flexWrap: "wrap",
         }}
       >
-        <span style={{ display: "flex", width: "100%",justifyContent: "space-between" }}>
-
-        <strong>Console Output:</strong>
-        <button style={{ border: "none", backgroundColor: "transparent" , cursor: "pointer"}} onClick={() => setLogs([])}>⊘</button>
+        <span
+          style={{
+            display: "flex",
+            width: "100%",
+            justifyContent: "space-between",
+          }}
+        >
+          <strong>Console Output:</strong>
+          <button
+            style={{
+              border: "none",
+              backgroundColor: "transparent",
+              cursor: "pointer",
+            }}
+            onClick={() => setLogs([])}
+          >
+            ⊘
+          </button>
         </span>
         {/* <div style={{ display: "flex", gap: "8px", fontSize: "11px" }}>
           {["log", "info", "success", "error"].map((type) => {
@@ -144,39 +158,47 @@ const FloatingBoxJS = () => {
             );
           })}
         </div> */}
-        <div style={{ display: "flex", gap: "8px", fontSize: "11px", flexWrap: "wrap" }}>
-  {["all", "log", "info", "success", "error"].map((type) => {
-    const count = type === "all"
-      ? logs.length
-      : logs.filter((log) => log.type === type).length;
-    return (
-      <button
-        key={type}
-        onClick={() => setFilter(type)}
-        style={{
-          color: getColor(type),
-          fontWeight: filter === type ? "bold" : "normal",
-          background: "transparent",
-          border: "1px solid transparent",
-          cursor: "pointer",
-        }}
-      >
-        {type.toUpperCase()}: {count}
-      </button>
-    );
-  })}
-</div>
+        <div
+          style={{
+            display: "flex",
+            gap: "8px",
+            fontSize: "11px",
+            flexWrap: "wrap",
+          }}
+        >
+          {["all", "log", "info", "success", "error"].map((type) => {
+            const count =
+              type === "all"
+                ? logs.length
+                : logs.filter((log) => log.type === type).length;
+            return (
+              <button
+                key={type}
+                onClick={() => setFilter(type)}
+                style={{
+                  color: getColor(type),
+                  fontWeight: filter === type ? "bold" : "normal",
+                  background: "transparent",
+                  border: "1px solid transparent",
+                  cursor: "pointer",
+                }}
+              >
+                {type.toUpperCase()}: {count}
+              </button>
+            );
+          })}
+        </div>
       </div>
- <div style={{ overflowY: "auto", maxHeight: size.height - 40 }}>
-  {[...logs]
-    .filter((log) => filter === "all" || log.type === filter)
-    .reverse()
-    .map((log, idx) => (
-      <div key={idx} style={{ color: getColor(log.type) }}>
-        {log.message}
+      <div style={{ overflowY: "auto", maxHeight: size.height - 40 }}>
+        {[...logs]
+          .filter((log) => filter === "all" || log.type === filter)
+          .reverse()
+          .map((log, idx) => (
+            <div key={idx} style={{ color: getColor(log.type) }}>
+              {log.message}
+            </div>
+          ))}
       </div>
-  ))}
-</div>
       <div
         data-resize
         style={{
